@@ -19,7 +19,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { useEffect } from 'react';
 
 
 export default function Dashboard() {
@@ -33,10 +33,14 @@ export default function Dashboard() {
   const [reason, setReason] = useState('');
   const [species, setSpecies] = useState('');
   const [rows, setRows] = useState([]);
-
+  const [item, setItem] = useState('');
   const handleNavItemClick = (index) => {
     setActiveNavItem(index);
   };
+
+  useEffect(() => {
+   setItem(localStorage.getItem('username'))
+  }, []);
 
   const onChangeDate = (date) => {
     setSelectedDate(date);
@@ -244,7 +248,7 @@ export default function Dashboard() {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold color">
-                     Mostrar Citas de Usuario: {localStorage.getItem('username')}
+                     Mostrar Citas de Usuario: {item}
                   </h3>
                 </div>
                 <div className="relative p-6 w-45">
@@ -379,7 +383,7 @@ export default function Dashboard() {
               <div className="icon-container">
               </div>
               <h4 className="color">Bienvenido</h4>
-              <h1 className="color">{localStorage.getItem('username')}</h1>
+              <h1 className="color">{item}</h1>
           </div>
           <div className="active-calories color">
             <h1 >Dates</h1>
