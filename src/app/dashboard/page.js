@@ -54,7 +54,7 @@ export default function Dashboard() {
   try {
     const idUsuario = localStorage.getItem('userId');
     var dataCitas = [];
-    const res = await fetch('http://localhost:3001/SV/cita/all', {
+    const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/cita/all', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export default function Dashboard() {
       const data = { date: formatedDate, petName, race, reason, species, idUsuario };
       console.log(data);
 
-      const res = await fetch('http://localhost:3001/SV//createCita', {
+      const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/createCita', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

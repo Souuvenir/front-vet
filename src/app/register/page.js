@@ -17,7 +17,7 @@ export default function Login() {
 
     console.log(data);
     try {
-      const res = await fetch('http://localhost:3001/SV/register', {
+      const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

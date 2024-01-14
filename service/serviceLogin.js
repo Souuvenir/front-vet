@@ -3,7 +3,7 @@ const login = async(e) => {
     const usuario = document.getElementById("usuario").value
     const password = document.getElementById("password").value
     const data = { usuario, password }
-    const res = await fetch('http://localhost:3000/SV/login', {
+    const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/login', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'

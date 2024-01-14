@@ -15,7 +15,7 @@ export default function Login() {
     const data = { username, password };
 
     try {
-      const res = await fetch('http://localhost:3001/SV/login', {
+      const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
