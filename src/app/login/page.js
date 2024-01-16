@@ -2,12 +2,16 @@
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 import React, { useEffect, useState } from 'react';
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Login() {
   const [sliderRef] = useKeenSlider({ loop: true });
   const [redirecting, setRedirecting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const login = async (event) => {
+    setShowModal(true);
     event.preventDefault();
     
     const username = document.getElementById('username').value;
@@ -26,10 +30,12 @@ export default function Login() {
       const json = await res.json();
 
       if (res.ok) {
+        console.log('hola');
         localStorage.setItem('userId', json.userId);
         localStorage.setItem('username', json.usuario);
         console.log(json.usuario);
         setRedirecting(true);
+        setShowModal(false);
       } else {
         alert(json.message);
       }
@@ -47,7 +53,7 @@ export default function Login() {
       try {
         if (redirecting && userId === isAdmin) {
           window.location.href = '/admin';
-        } else  {
+        } if(redirecting && userId !== isAdmin) {
           window.location.href = '/dashboard';
         }
       } catch (error) {
@@ -58,7 +64,24 @@ export default function Login() {
     handleLogin();
   }, [redirecting]);
   return (
-<main className="flex flex-col items-center justify-between p-24">
+  <main className="flex flex-col items-center justify-between p-24">
+        {showModal ? (
+        <>
+          <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          >
+            <div className="relative min-w-12 my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="relative p-6 w-45">
+                   <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row">
+                    <CircularProgress color="secondary" />
+                  </Stack>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
     <div className="container h-full p-10">
       <div className="g-6 flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
         <div className="w-full">

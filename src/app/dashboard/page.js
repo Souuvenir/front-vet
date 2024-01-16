@@ -1,6 +1,6 @@
 'use client'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHouse, faCalendarCheck, faCalendar} from "@fortawesome/free-solid-svg-icons";
+import {faHouse, faCalendarCheck, faCalendar,faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -78,13 +78,16 @@ export default function Dashboard() {
     alert('An unexpected error occurred. Please try again.');
   }
 };
+  const logOut = async (event) => {
+    console.log("entro");
+    console.log(localStorage.getItem('userId'));
+    console.log(localStorage.getItem('username'));
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    window.location.href = '/';
+  }
 
   const addDate = async (event) => {
-    console.log(petName);
-    console.log(selectedDate);
-    console.log(race);
-    console.log(reason);
-    console.log(species);
     try {
       if (event) {
         event.preventDefault();
@@ -335,6 +338,14 @@ export default function Dashboard() {
               <a onClick={() => setShowModal(true)}>
                 <FontAwesomeIcon className="nav-icon" icon={faCalendarCheck} />
                 <span className="nav-text">Tomar Cita</span>
+              </a>
+            </li>
+            <li className={`nav-item ${activeNavItem === 2 ? 'active' : ''}`} onClick={() => handleNavItemClick(2)}>
+              <b></b>
+              <b></b>
+              <a onClick={() => logOut()}>
+                <FontAwesomeIcon className="nav-icon" icon={faRightFromBracket} />
+                <span className="nav-text">Cerrar Sesion</span>
               </a>
             </li>
           </ul>
