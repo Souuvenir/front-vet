@@ -1,11 +1,7 @@
 'use client'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHouse, faCalendarCheck, faCalendar} from "@fortawesome/free-solid-svg-icons";
+import {faHouse, faUserNurse, faClipboardUser} from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useState } from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -20,6 +16,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import Button from '@mui/material/Button';
 
 
 export default function Dashboard() {
@@ -27,28 +25,31 @@ export default function Dashboard() {
   const [activeNavItem, setActiveNavItem] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [petName, setPetName] = useState('');
-  const [race, setRace] = useState('');
-  const [reason, setReason] = useState('');
-  const [species, setSpecies] = useState('');
+  const [nombre, setNombre] = useState(''); // Actualizado a 'nombre'
+  const [rut, setRut] = useState(''); // Actualizado a 'rut'
+  const [edad, setEdad] = useState(''); // Actualizado a 'edad'
+  const [especialidad, setEspecialidad] = useState(''); // Actualizado a 'especialidad'
   const [rows, setRows] = useState([]);
   const [item, setItem] = useState('');
   const handleNavItemClick = (index) => {
     setActiveNavItem(index);
   };
-
+   const data = [
+    {
+      "year": "2016",
+      "Vet Felinos": 150,
+      "Vet Caninos": 200
+    },
+    {
+      "year": "2017",
+      "Vet Felinos": 100,
+      "Vet Caninos": 300
+    },
+    
+   ]
   useEffect(() => {
    setItem(localStorage.getItem('username'))
   }, []);
-
-  const onChangeDate = (date) => {
-    setSelectedDate(date);
-  };
-
-  const onChangeSpecies = (event) => {
-    setSpecies(event.target.value);
-  };
 
   const getDates = async () => {
   try {
@@ -65,9 +66,7 @@ export default function Dashboard() {
 
     if (res.ok) {
       dataCitas = json.citas;
-      console.log(json);
-      const citasUsuario = dataCitas.filter((cita) => cita.idUsuario === idUsuario);
-      setRows(citasUsuario);
+      setRows(dataCitas);
       console.log('Citas del usuario:', citasUsuario);
     } else {
       alert("error al obtener las citas"); 
@@ -79,22 +78,16 @@ export default function Dashboard() {
   }
 };
 
-  const addDate = async (event) => {
-    console.log(petName);
-    console.log(selectedDate);
-    console.log(race);
-    console.log(reason);
-    console.log(species);
+  const addVet = async (event) => {
     try {
       if (event) {
         event.preventDefault();
       }
-      const formatedDate = dayjs(selectedDate).format('YYYY-MM-DD HH:mm:ss');
       const idUsuario = localStorage.getItem('userId');
-      const data = { date: formatedDate, petName, race, reason, species, idUsuario };
+      const data = { nombre, rut, edad, especialidad};
       console.log(data);
 
-      const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/createCita', {
+      const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/veterinario', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +99,7 @@ export default function Dashboard() {
 
       if (res.ok) {
         console.log(data);
-        alert("Cita Agendada Exitosamente");
+        alert("Vet Agregado Exitosamente");
       } else {
         alert(json.message);
       }
@@ -126,7 +119,7 @@ export default function Dashboard() {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold color">
-                    Reservar una Cita
+                    Agregar nuevo Veterinario
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -139,71 +132,62 @@ export default function Dashboard() {
                 </div>
                 <div className="relative p-6 w-45">
                   <p className="my-4 text-blueGray-500 text-lg leading-relaxed color">
-                    I always felt like I could do anything. That’s the main
-                    thing people are 
+                    En este componente puedes agregar un veterinario a la base de datos.
+                    Recuerda completar todos los campos!
                   </p>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer 
-                      components={['DateTimePicker']}>
-                      <DateTimePicker label="Escoge Una Cita" 
-                      value={selectedDate}
-                      onChange={(newValue) => onChangeDate(newValue)}/>
-                    </DemoContainer>
-                  </LocalizationProvider>
-
                   <div className="mb-4 mt-4">
                     <label
-                      htmlFor="petName"
+                      htmlFor="Nombre"
                       className="block text-sm font-semibold text-gray-800"
                     >
-                      Nombre de la Mascota
+                      Nombre
                     </label>
                     <input
-                      value={petName}
-                      onChange={(e) => setPetName(e.target.value)}
-                      id="petName"
+                      value={nombre}
+                      onChange={(e) => setNombre(e.target.value)}
+                      id="Nombre"
                       type="text"
                       className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-800 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="race"
+                      htmlFor="Rut"
                       className="block text-sm font-semibold text-gray-800"
                     >
-                      Raza
+                      Rut
                     </label>
                     <input
-                      value={race}
-                      onChange={(e) => setRace(e.target.value)}
-                      id="race"
+                      value={rut}
+                      onChange={(e) => setRut(e.target.value)}
+                      id="Rut"
                       type="text"
                       className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-800 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="reason"
+                      htmlFor="Edad"
                       className="block text-sm font-semibold text-gray-800"
                     >
-                      Motivo de la consulta
+                      Edad
                     </label>
                     <input
-                      value={reason}
-                      onChange={(e) => setReason(e.target.value)}
-                      id="reason"
-                      type="text"
+                      value={edad}
+                      onChange={(e) => setEdad(e.target.value)}
+                      id="edad"
+                      type="number"
                       className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-800 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
-                  <FormLabel className="color" id="demo-radio-buttons-group-label">Especie</FormLabel>
+                  <FormLabel className="color" id="demo-radio-buttons-group-label">Especialidad</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
                     defaultValue="female"
                     name="radio-buttons-group"
-                    id="species"
-                    value = {species}
-                    onChange = {onChangeSpecies}
+                    id="especialidad"
+                    value = {especialidad}
+                    onChange = {(e) => setEspecialidad(e.target.value)}
                   >
                     <FormControlLabel className="color" value="Canino" control={<Radio />} label="Canino" />
                     <FormControlLabel className="color" value="Felino" control={<Radio />} label="Felino" />
@@ -227,7 +211,7 @@ export default function Dashboard() {
                         }}
                     onClick={() => {
                       setShowModal(false);
-                      addDate();
+                      addVet();
                     }}
                   >
                     Save Changes
@@ -248,7 +232,7 @@ export default function Dashboard() {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold color">
-                     Mostrar Citas de Usuario: {item}
+                     Agregar Recetas Medicas
                   </h3>
                 </div>
                 <div className="relative p-6 w-45">
@@ -272,8 +256,11 @@ export default function Dashboard() {
                               </TableCell>
                               <TableCell align="right">{row.hora_inicio}</TableCell>
                               <TableCell align="right">{row.hora_fin}</TableCell>
-                              <TableCell align="right">{}</TableCell>
+                              <TableCell align="right">Test</TableCell>
                               <TableCell align="right">{row.idVeterinario}</TableCell>
+                              <Button variant="contained" color="primary" onClick={() => handleAgregarReceta(row)}>
+                                Agregar Receta
+                            </Button>
                             </TableRow>
                           ))}
                         </TableBody>
@@ -325,7 +312,7 @@ export default function Dashboard() {
               <b></b>
               <b></b>
               <a onClick={() =>setShowModal2(true)}>
-                <FontAwesomeIcon className="nav-icon" icon={faCalendar} />
+                <FontAwesomeIcon className="nav-icon" icon={faClipboardUser} />
                 <span className="nav-text">Citas</span>
               </a>
             </li>
@@ -333,8 +320,8 @@ export default function Dashboard() {
               <b></b>
               <b></b>
               <a onClick={() => setShowModal(true)}>
-                <FontAwesomeIcon className="nav-icon" icon={faCalendarCheck} />
-                <span className="nav-text">Tomar Cita</span>
+                <FontAwesomeIcon className="nav-icon" icon={faUserNurse} />
+                <span className="nav-text">Agregar Vet</span>
               </a>
             </li>
           </ul>
@@ -343,7 +330,7 @@ export default function Dashboard() {
         <section className="content">
           <div className="left-content">
             <div className="activities">
-              <h1>Perfil Mascota</h1>
+              <h1>Dashboard Admin</h1>
               <div className="activity-container">
                 <div className="image-container img-one">
                   <img src="/Poopy2.jpg" alt="perrito" />
@@ -360,19 +347,34 @@ export default function Dashboard() {
                 </div>
 
                 <div className="image-container img-three">
-                  <a className="block max-w-m p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Mascota test</h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400 pt-2 pl-3">Edad:</p>
-                  <p className="font-normal text-gray-700 dark:text-gray-400 pt-2 pl-3">Raza:</p>
-                  <p className="font-normal text-gray-700 dark:text-gray-400 pt-2 pl-3">Genero:</p>
-                  <p className="font-normal text-gray-700 dark:text-gray-400 pt-2 pl-3">Peso:</p>
-                  <p className="font-normal text-gray-700 dark:text-gray-400 pt-2 pl-3">Altura:</p>
-                  <p className="font-normal text-gray-700 dark:text-gray-400 pt-2 pl-3">Color:</p>
-                  <p className="font-normal text-gray-700 dark:text-gray-400 pt-2 pl-3">Especie:</p>
-                  <p className="font-normal text-gray-700 dark:text-gray-400 pt-2 pl-3">Dueño:</p>
-                  <p className="font-normal text-gray-700 dark:text-gray-400 pt-2 pb-5 pl-3">Telefono:</p>
-                  </a>
-                </div>
+                    <h2 className="color">Citas totales</h2>
+                    <section className="flex justify-evenly my-4 px-4 gap-3">
+                        <div className="w-5/6 h-[300px] bg-gray-700 rounded">
+                             <>
+                                <ResponsiveContainer width="100%" height="100%" >
+                                <AreaChart width={730} height={250} data={data}
+                                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                                    <defs>
+                                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                                    </linearGradient>
+                                    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                                        <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                                    </linearGradient>
+                                    </defs>
+                                    <XAxis dataKey="year" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Area type="monotone" dataKey="Vet Felinos" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+                                    <Area type="monotone" dataKey="Vet Caninos" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
+                                </AreaChart>
+                                </ResponsiveContainer>
+                            </>
+                        </div>
+                    </section>
+                </div>          
               </div>
             </div>
           </div>

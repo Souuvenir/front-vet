@@ -331,7 +331,6 @@ nav ul li a {
 
 .content {
   height: 40rem;
-  display: grid;
   grid-template-columns: 75% 25%;
 }
 

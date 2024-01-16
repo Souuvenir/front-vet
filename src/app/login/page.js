@@ -9,7 +9,7 @@ export default function Login() {
 
   const login = async (event) => {
     event.preventDefault();
-
+    
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const data = { username, password };
@@ -41,8 +41,13 @@ export default function Login() {
 
   useEffect(() => {
     const handleLogin = async () => {
+      var userId = localStorage.getItem('userId', userId);
+      const isAdmin = '65977ee931af0d0f68bdfe18';
+
       try {
-        if (redirecting) {
+        if (redirecting && userId === isAdmin) {
+          window.location.href = '/admin';
+        } else  {
           window.location.href = '/dashboard';
         }
       } catch (error) {
