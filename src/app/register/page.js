@@ -13,7 +13,23 @@ export default function Login() {
     const nombreUsuario = document.getElementById('nombre_usuario').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const nombre = document.getElementById('nombre').value;
+    const apellido = document.getElementById('apellido').value;
+    const confirmPassword = document.getElementById('Cpassword').value;
+
     const data = { nombreUsuario, email, password};
+
+    // Validar que todos los campos obligatorios estén llenos
+    if (!nombreUsuario || !nombre || !apellido || !email || !password || !confirmPassword) {
+      alert('Por favor, completa todos los campos.');
+      return;
+    }
+
+    // Validar que las contraseñas coincidan
+    if (password !== confirmPassword) {
+      alert('Las contraseñas no coinciden.');
+      return;
+    }
 
     console.log(data);
     try {
