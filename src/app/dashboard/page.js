@@ -40,12 +40,12 @@ export default function Dashboard() {
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [petName, setPetName] = useState('');
+  const [nombre, setNombre] = useState('');
   const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [edad, setEdad] = useState('');
   const [race, setRace] = useState('');
   const [reason, setReason] = useState('');
-  const [species, setSpecies] = useState('');
+  const [especie, setEspecie] = useState('');
   const [rows, setRows] = useState([]);
   const [item, setItem] = useState('');
   const [pacientes, setPacientes] = useState([]);
@@ -92,7 +92,7 @@ export default function Dashboard() {
   };
 
   const onChangeSpecies = (event) => {
-    setSpecies(event.target.value);
+    setEspecie(event.target.value);
   };
 
   const getDates = async () => {
@@ -139,20 +139,20 @@ const savePet = async (event) => {
       event.preventDefault();
     }
 
-    if (!petName || !fechaNacimiento || !edad || !species) {
+    if (!nombre || !fechaNacimiento || !edad || !especie) {
       alert('Por favor, complete todos los campos.');
       return;
     }
 
     const idUsuario = localStorage.getItem('userId');
     const data = {
-      petName,
-      fechaNacimiento,
-      edad,
-      species,
-      idUsuario,
+      idUsuario: idUsuario,
+      nombre: nombre,
+      fechaNacimiento: fechaNacimiento,
+      edad: edad,
+      especie: especie,
     };
-
+    console.log(data);
     const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/paciente', {
       method: 'POST',
       headers: {
@@ -160,8 +160,6 @@ const savePet = async (event) => {
       },
       body: JSON.stringify(data),
     });
-
-    const json = await res.json();
 
     if (res.ok) {
       console.log(data);
@@ -182,7 +180,7 @@ const savePet = async (event) => {
       }
       const formatedDate = dayjs(selectedDate).format('YYYY-MM-DD HH:mm:ss');
       const idUsuario = localStorage.getItem('userId');
-      const data = { date: formatedDate, petName, race, reason, species, idUsuario };
+      const data = { date: formatedDate, nombre, race, reason, especie, idUsuario };
       console.log(data);
 
       const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/createCita', {
@@ -235,15 +233,15 @@ const savePet = async (event) => {
                   </p>
                   <div className="mb-4 mt-4">
                     <label
-                      htmlFor="petName"
+                      htmlFor="nombre"
                       className="block text-sm font-semibold text-gray-800"
                     >
                       Nombre de la Mascota
                     </label>
                     <input
-                      value={petName}
-                      onChange={(e) => setPetName(e.target.value)}
-                      id="petName"
+                      value={nombre}
+                      onChange={(e) => setNombre(e.target.value)}
+                      id="nombre"
                       type="text"
                       className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-indigo-400 focus:ring-indigo-800 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
@@ -283,8 +281,8 @@ const savePet = async (event) => {
                     aria-labelledby="demo-radio-buttons-group-label"
                     defaultValue="Canino"
                     name="radio-buttons-group"
-                    id="species"
-                    value = {species}
+                    id="especie"
+                    value = {especie}
                     onChange = {onChangeSpecies}
                   >
                     <FormControlLabel className="color" value="Canino" control={<Radio />} label="Canino" />
@@ -414,8 +412,8 @@ const savePet = async (event) => {
                     aria-labelledby="demo-radio-buttons-group-label"
                     defaultValue="female"
                     name="radio-buttons-group"
-                    id="species"
-                    value = {species}
+                    id="especie"
+                    value = {especie}
                     onChange = {onChangeSpecies}
                   >
                     <FormControlLabel className="color" value="Canino" control={<Radio />} label="Canino" />
