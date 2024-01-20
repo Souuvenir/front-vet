@@ -1,6 +1,6 @@
 'use client'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHouse, faUserNurse, faClipboardUser} from "@fortawesome/free-solid-svg-icons";
+import {faHouse, faUserNurse, faClipboardUser, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useState } from 'react';
 import Radio from '@mui/material/Radio';
@@ -47,6 +47,15 @@ export default function Dashboard() {
     },
     
    ]
+    const logOut = async (event) => {
+    console.log("entro");
+    console.log(localStorage.getItem('userId'));
+    console.log(localStorage.getItem('username'));
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    window.location.href = '/';
+  }
+
   useEffect(() => {
    setItem(localStorage.getItem('username'))
   }, []);
@@ -307,7 +316,6 @@ export default function Dashboard() {
                 <span className="nav-text">Dashboard</span>
               </a>
             </li>
-
             <li className={`nav-item ${activeNavItem === 1 ? 'active' : ''}`} onClick={() => handleNavItemClick(1)}>
               <b></b>
               <b></b>
@@ -322,6 +330,14 @@ export default function Dashboard() {
               <a onClick={() => setShowModal(true)}>
                 <FontAwesomeIcon className="nav-icon" icon={faUserNurse} />
                 <span className="nav-text">Agregar Vet</span>
+              </a>
+            </li>
+            <li className={`nav-item ${activeNavItem === 3 ? 'active' : ''}`} onClick={() => handleNavItemClick(3)}>
+              <b></b>
+              <b></b>
+              <a onClick={() => logOut()}>
+                <FontAwesomeIcon className="nav-icon" icon={faRightFromBracket} />
+                <span className="nav-text">Cerrar Sesion</span>
               </a>
             </li>
           </ul>

@@ -70,12 +70,49 @@ export default function Login() {
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
-            <div className="relative min-w-12 my-6 mx-auto max-w-3xl">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="relative p-6 w-45">
-                   <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row">
-                    <CircularProgress color="secondary" />
-                  </Stack>
+            <div className="relative min-w-12 mx-auto max-w-3xl">
+              <div className="">
+                <div className="">
+                <div className="">
+                  <div className="" > 
+                  <div className="" style={{ borderRadius: '10px',display: 'flex', justifyContent: 'center', alignItems:"center",height:"200px", background:'white', width: '200px' }}>
+                      <div className="dog">
+                        <div className="dog-body">
+                          <div className="dog-tail">
+                            <div className="dog-tail">
+                              <div className="dog-tail">
+                                <div className="dog-tail">
+                                  <div className="dog-tail">
+                                    <div className="dog-tail">
+                                      <div className="dog-tail">
+                                        <div className="dog-tail"></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="dog-torso"></div>
+                        <div className="dog-head">
+                          <div className="dog-ears">
+                            <div className="dog-ear"></div>
+                            <div className="dog-ear"></div>
+                          </div>
+                          <div className="dog-eyes">
+                            <div className="dog-eye"></div>
+                            <div className="dog-eye"></div>
+                          </div>
+                          <div className="dog-muzzle">
+                            <div className="dog-tongue"></div>
+                          </div>
+                        </div>
+                      </div>
+                    <div className="ball" tabIndex="0"></div>
+                </div>
+              </div>
+              </div>
                 </div>
               </div>
             </div>
@@ -103,33 +140,33 @@ export default function Login() {
                   <form>
                     <p className="mb-4 text-center">Iniciar Sesion</p>
                     <div className="relative mb-4" data-te-input-wrapper-init>
+                      <label
+                        htmlFor="exampleFormControlInput1"
+                        className=""
+                      >
+                        Usuario
+                      </label>
                       <input
                         type="text"
                         className="peer block min-h-[auto] w-full rounded border-0 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                         id="username"
-                        placeholder="Username"
+                        placeholder=""
                       />
-                      <label
-                        htmlFor="exampleFormControlInput1"
-                        className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                      >
-                        Usuario
-                      </label>
                     </div>
 
                     <div className="relative mb-4" data-te-input-wrapper-init>
+                      <label
+                        htmlFor="exampleFormControlInput11"
+                        className=""
+                      >
+                        Contraseña
+                      </label>
                       <input
                         type="password"
                         className="peer block min-h-[auto] w-full rounded border-0 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-03333339333ikm06"
                         id="password"
                         placeholder=""
                       />
-                      <label
-                        htmlFor="exampleFormControlInput11"
-                        className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                      >
-                        Contraseña
-                      </label>
                     </div>
 
                     <div className="mb-12 pb-1 pt-1 text-center">
@@ -169,14 +206,14 @@ export default function Login() {
               </div>
 
               <div className="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none">
-                       <div ref={sliderRef} className="keen-slider">
-                        <div className="keen-slider__slide number-slide6"><img src="perrito doctor.png" alt="slide1"/></div>
-                        <div className="keen-slider__slide number-slide6"><img src="Poopy1.jpeg" alt="slide2"/></div>
-                        <div className="keen-slider__slide number-slide6"><img src="Poopy2.jpg" alt="slide3"/></div>
-                        <div className="keen-slider__slide number-slide4">4</div>
-                        <div className="keen-slider__slide number-slide5">5</div>
-                        <div className="keen-slider__slide number-slide6">6</div>
-                      </div> 
+                <div ref={sliderRef} className="keen-slider">
+                <div className="keen-slider__slide number-slide6"><img src="perrito doctor.png" alt="slide1"/></div>
+                <div className="keen-slider__slide number-slide6"><img src="Poopy1.jpeg" alt="slide2"/></div>
+                <div className="keen-slider__slide number-slide6"><img src="Poopy2.jpg" alt="slide3"/></div>
+                <div className="keen-slider__slide number-slide4"><img src="PerritoVeterninario.png" alt="slide3"/></div>
+                <div className="keen-slider__slide number-slide5"><img src="VetGatitoChico.png" alt="slide3"/></div>
+                <div className="keen-slider__slide number-slide6"><img src="VetMapache.png" alt="slide3"/></div>
+              </div> 
               </div>
             </div>
           </div>
