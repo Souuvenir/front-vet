@@ -50,6 +50,7 @@ export default function Dashboard() {
   const [item, setItem] = useState('');
   const [pacientes, setPacientes] = useState([]);
   const [selectedPaciente, setSelectedPaciente] = useState('');
+  const [selectedHoraDelete, setSelectedHoraDelete] = useState('');
 
 
   const handleNavItemClick = (index) => {
@@ -105,7 +106,7 @@ export default function Dashboard() {
         'Content-Type': 'application/json',
       },
     });
-
+    
     const json = await res.json();
 
     if (res.ok) {
@@ -131,7 +132,33 @@ export default function Dashboard() {
     localStorage.removeItem('username');
     window.location.href = '/';
   }
+  const handlerDelete = async (event) => {
+    deleteDate(event);
+  }
 
+  const deleteDate = async (event) => {
+    console.log("entro deleteDate",event);
+    try {
+      const res = await fetch('https://dull-pear-scallop-tux.cyclic.app/SV/cita/'+ event, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const json = await res.json();
+
+      if (res.status === 200) {
+        alert("Cita Eliminada Exitosamente");
+        getDates();
+      } else {
+        alert(json.message);
+      }
+    } catch (error) {
+
+    }
+    
+  }
 
 const savePet = async (event) => {
   try {
@@ -473,6 +500,7 @@ const savePet = async (event) => {
                             <TableCell align="right">Hora Final</TableCell>
                             <TableCell align="right">Nombre Mascota</TableCell>
                             <TableCell align="right">Veterinario Asignado</TableCell>
+                            <TableCell align="right">Acciones</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -485,6 +513,20 @@ const savePet = async (event) => {
                               <TableCell align="right">{row.hora_fin}</TableCell>
                               <TableCell align="right">{}</TableCell>
                               <TableCell align="right">{row.idVeterinario}</TableCell>
+                              <TableCell align="right">
+                                <button
+                                  className="font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                  type="button"
+                                  style={{
+                                    background: "red",
+                                  }}
+                                  onClick={() => {
+                                    handlerDelete(row._id);
+                                  }}
+                                >
+                                  Eliminar Cita
+                                </button>
+                              </TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
